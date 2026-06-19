@@ -1,1 +1,605 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>Cozy Crochet</title><script defer="defer" src="/static/js/main.1f5071e3.js"></script></head><body><div id="root"></div></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deadline Apocalypse</title>
+    <style>
+        :root {
+            --bg-color: #0d0d13;
+            --card-bg: #161622;
+            --accent-red: #ff4757;
+            --accent-orange: #ffa502;
+            --accent-blue: #2ed573;
+            --text-main: #f1f2f6;
+            --text-muted: #a4b0be;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Utility Classes & Container */
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 5rem 0;
+        }
+
+        .text-center { text-align: center; }
+        
+        section {
+            border-bottom: 1px solid #222;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-main);
+        }
+
+        h2 span {
+            color: var(--accent-red);
+        }
+
+        /* 1. Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            background: radial-gradient(circle at center, #1e112a 0%, var(--bg-color) 70%);
+            padding: 2rem;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: var(--text-main);
+            animation: pulse 3s infinite alternate;
+            text-shadow: 0 0 20px rgba(255, 71, 87, 0.6);
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            color: var(--accent-orange);
+            margin-top: 1rem;
+            margin-bottom: 3rem;
+            font-style: italic;
+        }
+
+        .cta-btn {
+            background: transparent;
+            border: 2px solid var(--accent-red);
+            color: var(--accent-red);
+            padding: 0.8rem 2rem;
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 4px;
+            text-decoration: none;
+        }
+
+        .cta-btn:hover {
+            background: var(--accent-red);
+            color: #fff;
+            box-shadow: 0 0 15px var(--accent-red);
+            transform: translateY(-3px);
+        }
+
+        /* 2. Story Flow */
+        .story-box {
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 8px;
+            border-left: 5px solid var(--accent-red);
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+
+        .story-day {
+            font-weight: bold;
+            color: var(--accent-orange);
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        .story-quote {
+            font-style: italic;
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+            display: block;
+        }
+
+        .boss-fight {
+            background: linear-gradient(135deg, #2a080c, #161622);
+            border: 2px dashed var(--accent-red);
+            animation: shake 0.5s infinite alternate;
+        }
+
+        /* 3. Meet the Villains */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .villain-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 8px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #222;
+            cursor: pointer;
+        }
+
+        .villain-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(255, 71, 87, 0.2);
+            border-color: var(--accent-red);
+        }
+
+        .villain-emoji {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .villain-card h3 {
+            margin-bottom: 0.8rem;
+            color: var(--text-main);
+        }
+
+        .villain-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* 4. Student Survival Meter */
+        .meter-container {
+            max-width: 600px;
+            margin: 0 auto var(--card-bg);
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 8px;
+        }
+
+        .meter-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .meter-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 15px;
+            background: #222;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 50%;
+            transition: width 0.5s ease-in-out;
+        }
+
+        #sleep-fill { background: var(--accent-blue); width: 15%; }
+        #stress-fill { background: var(--accent-red); width: 95%; }
+        #coffee-fill { background: var(--accent-orange); width: 85%; }
+        #motivation-fill { background: #5352ed; width: 5%; }
+
+        .interactive-panel {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .action-btn {
+            background: #222;
+            border: 1px solid var(--text-muted);
+            color: var(--text-main);
+            padding: 0.6rem 1.2rem;
+            margin: 0.5rem;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+
+        .action-btn:hover {
+            background: var(--text-main);
+            color: var(--bg-color);
+        }
+
+        /* 5. Apocalypse Timeline */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background: #222;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -2px;
+        }
+
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            background: inherit;
+            width: 50%;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            right: -8px;
+            background-color: var(--accent-red);
+            border: 4px solid var(--bg-color);
+            top: 15px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .left { left: 0; }
+        .right { left: 50%; }
+
+        .right::after { left: -8px; }
+
+        .content {
+            padding: 1.5rem;
+            background: var(--card-bg);
+            position: relative;
+            border-radius: 6px;
+        }
+
+        /* 6. Reality Check & 7. Solutions */
+        .text-block {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.15rem;
+            color: var(--text-muted);
+        }
+
+        .text-block p {
+            margin-bottom: 1.5rem;
+        }
+
+        .solutions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .sol-card {
+            background: rgba(46, 213, 115, 0.05);
+            border: 1px solid rgba(46, 213, 115, 0.2);
+            padding: 2rem;
+            border-radius: 8px;
+        }
+
+        .sol-card h4 {
+            color: var(--accent-blue);
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        /* 8. Final Message */
+        .final-msg {
+            height: 60vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(to top, #11071c, var(--bg-color));
+        }
+
+        .quote-box h3 {
+            font-size: 2.2rem;
+            font-style: italic;
+            max-width: 800px;
+            margin: 0 auto 1.5rem auto;
+            font-weight: 400;
+        }
+
+        .quote-box p {
+            color: var(--accent-orange);
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0% { transform: scale(1); text-shadow: 0 0 20px rgba(255, 71, 87, 0.5); }
+            100% { transform: scale(1.03); text-shadow: 0 0 40px rgba(255, 71, 87, 0.9); }
+        }
+
+        @keyframes shake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-1deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(0px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(2px, 1px) rotate(-1deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(2px, 2px) rotate(0deg); }
+            100% { transform: translate(1px, -2px) rotate(-1deg); }
+        }
+
+        /* Responsive Design */
+        @media screen and (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .hero p { font-size: 1.1rem; }
+            h2 { font-size: 1.8rem; }
+            
+            .timeline::after { left: 31px; }
+            .timeline-item { width: 100%; padding-left: 70px; padding-right: 25px; }
+            .timeline-item::after { left: 22px; }
+            .right { left: 0%; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="hero">
+        <h1 class="text-center">Deadline Apocalypse</h1>
+        <p class="text-center">When every professor chooses the same week.</p>
+        <a href="#story" class="cta-btn">Enter Survival Mode</a>
+    </header>
+
+    <section id="story">
+        <div class="container">
+            <h2 class="text-center">The <span>Outbreak</span></h2>
+            
+            <div class="story-box">
+                <div class="story-day">Day 1</div>
+                <p>It started with one assignment.</p>
+                <span class="story-quote">"Okay, this is manageable."</span>
+            </div>
+
+            <div class="story-box">
+                <div class="story-day">Day 3</div>
+                <p>A seminar announcement appeared. Then a record submission. Then another assignment.</p>
+                <span class="story-quote">Student Status &rarr; Sleep: Decreasing | Stress: Increasing</span>
+            </div>
+
+            <div class="story-box">
+                <div class="story-day">Day 5</div>
+                <p>Internal exam timetable released.</p>
+                <span class="story-quote">"Maybe it can't get worse."</span>
+            </div>
+
+            <div class="story-box">
+                <div class="story-day">Day 6</div>
+                <p>Project review scheduled.</p>
+            </div>
+
+            <div class="story-box boss-fight">
+                <div class="story-day" style="color: var(--accent-red);">Day 7: Doomsday</div>
+                <p><strong>Everything is due tomorrow.</strong></p>
+                <p style="margin-top: 1rem;">
+                    The Assignment Monster attacks. The Seminar Dragon awakens. <br>
+                    The Internal Exam Titan arrives. The Record Beast demands submission.
+                </p>
+                <span class="story-quote" style="color: #fff; font-weight: bold; text-transform: uppercase; margin-top: 1rem;">
+                    ⚠️ Student Survival Mode Activated.
+                </span>
+            </div>
+        </div>
+    </section>
+
+    <section id="villains">
+        <div class="container">
+            <h2 class="text-center">Meet the <span>Villains</span></h2>
+            <div class="grid">
+                <div class="villain-card" onclick="triggerEncounter('Assignment Monster')">
+                    <span class="villain-emoji">📝</span>
+                    <h3>Assignment Monster</h3>
+                    <p>"I only take 20 pages handwritten. Due by 8:00 AM."</p>
+                </div>
+                <div class="villain-card" onclick="triggerEncounter('Record Beast')">
+                    <span class="villain-emoji">📚</span>
+                    <h3>Record Beast</h3>
+                    <p>Feeds on detailed diagrams, error-free code, and lost weekends.</p>
+                </div>
+                <div class="villain-card" onclick="triggerEncounter('Seminar Dragon')">
+                    <span class="villain-emoji">🎤</span>
+                    <h3>Seminar Dragon</h3>
+                    <p>Breathes stage fright. Demands slide decks made entirely from scratch.</p>
+                </div>
+                <div class="villain-card" onclick="triggerEncounter('Internal Exam Titan')">
+                    <span class="villain-emoji">📋</span>
+                    <h3>Internal Exam Titan</h3>
+                    <p>Crushes schedules. Covers 5 units in a test worth only 5% of your final grade.</p>
+                </div>
+                <div class="villain-card" onclick="triggerEncounter('Surprise Test Ghost')">
+                    <span class="villain-emoji">👻</span>
+                    <h3>Surprise Test Ghost</h3>
+                    <p>Appears out of thin air when you decided to skip reading the syllabus.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="meters">
+        <div class="container">
+            <h2 class="text-center">Vitals <span>Simulator</span></h2>
+            <div class="meter-container">
+                <div class="meter-group">
+                    <div class="meter-label"><span>Sleep</span><span id="sleep-val">15%</span></div>
+                    <div class="progress-bar"><div id="sleep-fill" class="progress-fill"></div></div>
+                </div>
+                <div class="meter-group">
+                    <div class="meter-label"><span>Stress Level</span><span id="stress-val">95%</span></div>
+                    <div class="progress-bar"><div id="stress-fill" class="progress-fill"></div></div>
+                </div>
+                <div class="meter-group">
+                    <div class="meter-label"><span>Coffee Dependency</span><span id="coffee-val">85%</span></div>
+                    <div class="progress-bar"><div id="coffee-fill" class="progress-fill"></div></div>
+                </div>
+                <div class="meter-group">
+                    <div class="meter-label"><span>Motivation</span><span id="motivation-val">5%</span></div>
+                    <div class="progress-bar"><div id="motivation-fill" class="progress-fill"></div></div>
+                </div>
+
+                <div class="interactive-panel">
+                    <p id="log-display" style="color: var(--accent-orange); font-size: 0.95rem; margin-bottom: 1rem;">Click below to attempt survival actions.</p>
+                    <button class="action-btn" onclick="modifyStats('coffee')">Drink Coffee</button>
+                    <button class="action-btn" onclick="modifyStats('nap')">Take a 20-Min Nap</button>
+                    <button class="action-btn" onclick="modifyStats('study')">Attempt to Study</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="timeline">
+        <div class="container">
+            <h2 class="text-center">The Grim <span>Timeline</span></h2>
+            <div class="timeline">
+                <div class="timeline-item left">
+                    <div class="content">
+                        <h3>Monday</h3>
+                        <p>One innocent assignment. Hope remains high.</p>
+                    </div>
+                </div>
+                <div class="timeline-item right">
+                    <div class="content">
+                        <h3>Wednesday</h3>
+                        <p>Three heavy assignments pop out. Panic starts setting in.</p>
+                    </div>
+                </div>
+                <div class="timeline-item left">
+                    <div class="content">
+                        <h3>Friday</h3>
+                        <p>Internal exam + Seminar + Project review dropped simultaneously. Absolute chaos.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="reality">
+        <div class="container text-block text-center">
+            <h2>Reality <span>Check</span></h2>
+            <p>While looking back at academic crunch weeks can bring out humorous battle stories, the hyper-clustering of severe milestones takes a real toll on students.</p>
+            <p>When deadlines stack up simultaneously without cross-department communication, true depth of learning gets sacrificed for sheer survival. Cramming replaces comprehension, and health often takes the back seat.</p>
+        </div>
+    </section>
+
+    <section id="solutions">
+        <div class="container">
+            <h2 class="text-center">The <span>Antidote</span></h2>
+            <div class="solutions-grid">
+                <div class="sol-card">
+                    <h4>Balanced Scheduling</h4>
+                    <p>Distributing massive assignments across a transparent, staggered institutional roadmap.</p>
+                </div>
+                <div class="sol-card">
+                    <h4>Department Coordination</h4>
+                    <p>Professors talking to each other to make sure two massive reviews don't hit on the exact same morning.</p>
+                </div>
+                <div class="sol-card">
+                    <h4>Meaningful Learning</h4>
+                    <p>Prioritizing foundational conceptual understanding over checking off repetitive metrics under extreme time pressure.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="final-msg text-center">
+        <div class="quote-box">
+            <h3>"Students are not machines. Education should inspire, not overwhelm."</h3>
+            <p>— End of the Simulation —</p>
+        </div>
+    </footer>
+
+    <script>
+        // Live Stat adjustments
+        let stats = {
+            sleep: 15,
+            stress: 95,
+            coffee: 85,
+            motivation: 5
+        };
+
+        function updateUI() {
+            document.getElementById('sleep-fill').style.width = stats.sleep + '%';
+            document.getElementById('sleep-val').innerText = stats.sleep + '%';
+
+            document.getElementById('stress-fill').style.width = stats.stress + '%';
+            document.getElementById('stress-val').innerText = stats.stress + '%';
+
+            document.getElementById('coffee-fill').style.width = stats.coffee + '%';
+            document.getElementById('coffee-val').innerText = stats.coffee + '%';
+
+            document.getElementById('motivation-fill').style.width = stats.motivation + '%';
+            document.getElementById('motivation-val').innerText = stats.motivation + '%';
+        }
+
+        function modifyStats(action) {
+            const log = document.getElementById('log-display');
+            if (action === 'coffee') {
+                stats.coffee = Math.min(100, stats.coffee + 15);
+                stats.stress = Math.min(100, stats.stress + 5);
+                stats.sleep = Math.max(0, stats.sleep - 5);
+                log.innerText = "☕ Coffee consumed! Jittery energy up, but stress crept up too.";
+            } else if (action === 'nap') {
+                stats.sleep = Math.min(100, stats.sleep + 20);
+                stats.stress = Math.max(0, stats.stress - 15);
+                stats.motivation = Math.min(100, stats.motivation + 5);
+                log.innerText = "😴 Slept for 20 mins. You woke up not knowing what year it is.";
+            } else if (action === 'study') {
+                stats.motivation = Math.max(0, stats.motivation - 5);
+                stats.stress = Math.min(100, stats.stress + 10);
+                log.innerText = "📖 Opened the book. It's written in what looks like hieroglyphics. Stress up.";
+            }
+            updateUI();
+        }
+
+        function triggerEncounter(villainName) {
+            const log = document.getElementById('log-display');
+            stats.stress = Math.min(100, stats.stress + 10);
+            stats.motivation = Math.max(0, stats.motivation - 5);
+            log.innerText = `💥 You encountered ${villainName}! Your anxiety levels surged.`;
+            updateUI();
+        }
+    </script>
+</body>
+</html>
+
+```
